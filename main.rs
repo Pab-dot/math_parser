@@ -11,7 +11,7 @@ struct Lexer {
 }
 
 impl Lexer {
-    fn new(mut input: String) -> Lexer {
+    fn new(input: String) -> Lexer {
         let mut tokens = input
             .chars()
             .filter(|it| !it.is_ascii_whitespace())
@@ -146,6 +146,11 @@ impl Expression {
                     '/' => return lhs / rhs,
                     '^' => return lhs.powf(rhs),
                     '√' => return lhs.powf(1.0 / (rhs)),
+                    '.' => {
+                        return (lhs.to_string() + "." + &rhs.to_string())
+                            .parse::<f32>()
+                            .unwrap();
+                    }
                     op => panic!("Bad operator: {}", op),
                 }
             }
